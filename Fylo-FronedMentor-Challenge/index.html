@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon-32x32.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Fylo data storage component</title>
+  </head>
+
+  <body>
+    <img
+      src="/Fylo-FronedMentor-Challenge/assets/bg-desktop.png"
+      alt=""
+      class="desktop-img bg-img"
+    />
+    <img src="/Fylo-FronedMentor-Challenge/assets/bg-mobile.png" alt="" class="mobile-img bg-img">
+
+    <div class="wrapper">
+      <div class="left-box floating-section">
+        <img src="/Fylo-FronedMentor-Challenge/assets/logo.svg" alt="" />
+        <div class="icons" >
+          
+          <div class="icon_bg">
+            <input type="file" class="upload-file" id="upload-file-btn"></input>
+            <img
+              src="/Fylo-FronedMentor-Challenge/assets/icon-document.svg"
+              alt=""
+              class="icons__item"
+            />
+          </div>
+          <div class="icon_bg">
+            <img
+              src="/Fylo-FronedMentor-Challenge/assets/icon-folder.svg"
+              alt=""
+              class="icons__item"
+            />
+          </div>
+          <div class="icon_bg">
+            <img
+              src="/Fylo-FronedMentor-Challenge/assets/icon-upload.svg"
+              alt=""
+              class="icons__item"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="right-box floating-section">
+        <p>You’ve used <strong><span id="used-size"></span> <span class="size-unit"></span></strong> of your storage</p>
+        <div class="range-wrapper">
+          <div class="range-bar">
+            <div class="progress-bar" id="progress-bar-clr">
+              <div class="circle" id="progress-bar-circle"></div>
+            </div>
+          </div>
+          <div class="range-numbers">
+            <div class="range-numbers__item" id="zero-size">0 <span class="size-unit"></span></div>
+            <div class="range-numbers__item"><span id="max-size"></span> <span class="size-unit"></span></div>
+          </div>
+        </div>
+
+        <div class="bubble">
+          <h1 id="remain-size">185</h1>
+          <span><span class="size-unit"></span> Left</span>
+          <div class="triangle"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
