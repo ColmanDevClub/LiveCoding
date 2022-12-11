@@ -38,7 +38,7 @@
         <div class="icons" >
           
           <div class="icon_bg">
-            <input type="file" class="upload-file" id="upload-file-btn" onchange="onFileInputChange(this)"></input>
+            <input type="file" class="upload-file" onclick="this.value=null;" id="upload-file-btn" onchange="onFileInputChange(this)"></input>
             <img
               src="./assets/icon-document.svg"
               alt=""
@@ -63,7 +63,7 @@
       </div>
 
       <div class="right-box floating-section">
-        <p>You’ve used <strong><span id="used-size"></span> <span class="size-unit"></span></strong> of your storage</p>
+        <p>You’ve used <strong><span id="used-size"></span> <span id="used-size-unit" class="size-unit"></span></strong> of your storage</p>
         <div class="range-wrapper">
           <div class="range-bar">
             <div class="progress-bar" id="progress-bar-clr">
@@ -71,14 +71,14 @@
             </div>
           </div>
           <div class="range-numbers">
-            <div class="range-numbers__item" id="zero-size" onclick="reset()">0 <span class="size-unit"></span></div>
-            <div class="range-numbers__item"><span id="max-size"></span> <span class="size-unit"></span></div>
+            <div class="range-numbers__item" id="zero-size" onclick="reset()">0 <span class="size-unit">KB</span></div>
+            <div class="range-numbers__item"><span id="max-size"></span> <span id="total-size-unit" class="size-unit"></span></div>
           </div>
         </div>
 
         <div class="bubble">
           <h1 id="remain-size">185</h1>
-          <span><span class="size-unit"></span> Left</span>
+          <span><span id="remain-size-unit" class="size-unit"></span> Left</span>
           <div class="triangle"></div>
         </div>
       </div>

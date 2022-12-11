@@ -1,58 +1,91 @@
-var uploadBtn = document.getElementById("upload-file-btn");
-var sizeUnitElements = document.getElementsByClassName("size-unit");
 
-for (var i = 0; i < sizeUnitElements.length; i++) {
-  sizeUnitElements[i].innerHTML = "MB";
+const initApp = () => {
+  usedSize = Number(window.localStorage.getItem("usedSize"));
+  updateDashboard(usedSize);
 }
-var totalSize = 100;
-var maxSizeElement = document.getElementById("max-size");
-var usedSize = 0;
-var usedSizeElement = document.getElementById("used-size");
-var remainSizeElement = document.getElementById("remain-size");
-var progressBarClr = document.getElementById("progress-bar-clr");
-var progressBarCircle = document.getElementById("progress-bar-circle");
 
-var fileName;
-var validFile;
-var fileSize;
-// window.localStorage.setItem("usedSize", 0);
-updateSizes();
-uploadBtn.addEventListener("change", () => {
-  fileName = uploadBtn.value;
-  validFile = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(fileName);
-  console.log(validFile);
-  if (!validFile) {
-    alert("Invalid file type!");
+const onFileInputChange = (event) => {
+  const fileName = event.value;
+  const isImgFile = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(fileName);
+
+  if (isImgFile) {
+    const file = event.files[0];
+    updateFile(file);
   } else {
-    fileSize = uploadBtn.files[0];
-    fileSize = parseInt(fileSize.size / 1000 / 1000);
-    usedSize += fileSize;
-    if (usedSize > totalSize) {
-      alert("Not enough size!");
-      usedSize -= fileSize;
-    }
-    window.localStorage.setItem("usedSize", usedSize);
-    console.log();
-
-    updateSizes();
+    alert("Invalid file type!");
   }
-});
+};
 
-function updateSizes() {
-  usedSize = JSON.parse(window.localStorage.getItem("usedSize"));
-  usedSizeElement.innerText = usedSize;
-  remainSizeElement.innerHTML = totalSize - usedSize;
-  maxSizeElement.innerText = totalSize;
+const updateFile = (file) => {
+  const fileSize = file.size;
+  if (usedSize + fileSize < totalSize) {
+    //------------------- with files storing
+    // files.push(file);
+    // let totalFilesSize = 0;
+    // for (let i = 0; i < files.length; i++) {
+    //   totalFilesSize += files[i].size;
+    // }
+    // usedSize = totalFilesSize;
+    //-------------------
+    //------------------- without files storing
+    usedSize = usedSize + fileSize;
+    //-------------------
+    updateDashboard(usedSize);
+    window.localStorage.setItem("usedSize", usedSize);
+  } else {
+    alert("Not enough size!");
+  } 
+}
+
+
+const updateDashboard = (usedSize) => {
+  const formattedUsedSize = getFormatBytes(usedSize)
+  const usedSizeElement = document.getElementById("used-size");
+  usedSizeElement.innerText = formattedUsedSize.size;
+  const usedSizeUnitElement = document.getElementById("used-size-unit");
+  usedSizeUnitElement.innerText = formattedUsedSize.unit;
+
+  const formattedRemainedSize = getFormatBytes(totalSize - usedSize)
+  const remainSizeElement = document.getElementById("remain-size");
+  remainSizeElement.innerHTML = formattedRemainedSize.size;
+  const remainedSizeUnitElement = document.getElementById("remain-size-unit");
+  remainedSizeUnitElement.innerText = formattedRemainedSize.unit;
+
+  const formattedTotalSize = getFormatBytes(totalSize);
+  const maxSizeElement = document.getElementById("max-size");
+  maxSizeElement.innerText = formattedTotalSize.size;
+  const totalSizeUnitElement = document.getElementById("total-size-unit");
+  totalSizeUnitElement.innerText = formattedTotalSize.unit;
+
+  const progressBarClr = document.getElementById("progress-bar-clr");
   progressBarClr.style.width = (usedSize / totalSize) * 100 + "%";
+
+  const progressBarCircle = document.getElementById("progress-bar-circle");
   if (usedSize > 0) progressBarCircle.style.right = "0";
   else progressBarCircle.style.right = "-10px";
 }
 
-document.getElementById("zero-size").addEventListener("click", () => {
-  reset();
-});
+const getFormatBytes = (bytes, decimals = 2) => {
+  if (!+bytes) {
+    return {
+      size: 0, unit: 'Bytes'
+    }
+  } 
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
 
-function reset() {
-  window.localStorage.setItem("usedSize", 0);
-  updateSizes();
+  return  {
+    size: parseFloat((bytes / Math.pow(k, i)).toFixed(dm)),
+    unit: sizes[i]
+  }
 }
+
+const reset = () => {
+  usedSize = 0;
+  updateDashboard(usedSize);
+  window.localStorage.setItem("usedSize", 0);
+}
+
+initApp();
