@@ -26,35 +26,35 @@
 
   <body>
     <img
-      src="/Fylo-FronedMentor-Challenge/assets/bg-desktop.png"
+      src="./assets/bg-desktop.png"
       alt=""
       class="desktop-img bg-img"
     />
-    <img src="/Fylo-FronedMentor-Challenge/assets/bg-mobile.png" alt="" class="mobile-img bg-img">
+    <img src="./assets/bg-mobile.png" alt="" class="mobile-img bg-img">
 
     <div class="wrapper">
       <div class="left-box floating-section">
-        <img src="/Fylo-FronedMentor-Challenge/assets/logo.svg" alt="" />
+        <img src="./assets/logo.svg" alt="" />
         <div class="icons" >
           
           <div class="icon_bg">
-            <input type="file" class="upload-file" id="upload-file-btn"></input>
+            <input type="file" class="upload-file" id="upload-file-btn" onchange="onFileInputChange(this)"></input>
             <img
-              src="/Fylo-FronedMentor-Challenge/assets/icon-document.svg"
+              src="./assets/icon-document.svg"
               alt=""
               class="icons__item"
             />
           </div>
           <div class="icon_bg">
             <img
-              src="/Fylo-FronedMentor-Challenge/assets/icon-folder.svg"
+              src="./assets/icon-folder.svg"
               alt=""
               class="icons__item"
             />
           </div>
           <div class="icon_bg">
             <img
-              src="/Fylo-FronedMentor-Challenge/assets/icon-upload.svg"
+              src="./assets/icon-upload.svg"
               alt=""
               class="icons__item"
             />
@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="range-numbers">
-            <div class="range-numbers__item" id="zero-size">0 <span class="size-unit"></span></div>
+            <div class="range-numbers__item" id="zero-size" onclick="reset()">0 <span class="size-unit"></span></div>
             <div class="range-numbers__item"><span id="max-size"></span> <span class="size-unit"></span></div>
           </div>
         </div>
