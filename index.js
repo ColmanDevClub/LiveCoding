@@ -1,10 +1,10 @@
 const totalSizeInBytes = 100000000;
 
-let usedSize = 0;
+let usedSizeInBytes = 0;
 
 const initApp = () => {
-  usedSize = Number(window.localStorage.getItem("usedSize"));
-  updateDashboard(usedSize);
+  usedSizeInBytes = Number(window.localStorage.getItem("usedSizeInBytes"));
+  updateDashboard(usedSizeInBytes);
 }
 
 const onFileInputChange = (fileInputElement) => {
@@ -20,42 +20,36 @@ const onFileInputChange = (fileInputElement) => {
 };
 
 const updateFile = (file) => {
-  const fileSize = file.size;
+  const fileSizeInBytes = file.size;
 
-  if (usedSize + fileSize < totalSizeInBytes) {
-    usedSize = usedSize + fileSize;
-    updateDashboard(usedSize);
-    window.localStorage.setItem("usedSize", usedSize);
+  if (usedSizeInBytes + fileSizeInBytes < totalSizeInBytes) {
+    usedSizeInBytes = usedSizeInBytes + fileSizeInBytes;
+    updateDashboard(usedSizeInBytes);
+    window.localStorage.setItem("usedSizeInBytes", usedSizeInBytes);
   } else {
     alert("Not enough size!");
   } 
 }
 
-const updateDashboard = (usedSize) => {
-  const formattedUsedSize = getFormattedBytes(usedSize)
-  const usedSizeElement = document.getElementById("used-size");
-  usedSizeElement.innerText = formattedUsedSize.size;
-  const usedSizeUnitElement = document.getElementById("used-size-unit");
-  usedSizeUnitElement.innerText = formattedUsedSize.unit;
-
-  const formattedRemainSize = getFormattedBytes(totalSizeInBytes - usedSize)
-  const remainSizeElement = document.getElementById("remain-size");
-  remainSizeElement.innerHTML = formattedRemainSize.size;
-  const remainSizeUnitElement = document.getElementById("remain-size-unit");
-  remainSizeUnitElement.innerText = formattedRemainSize.unit;
-
-  const formattedTotalSize = getFormattedBytes(totalSizeInBytes);
-  const maxSizeElement = document.getElementById("max-size");
-  maxSizeElement.innerText = formattedTotalSize.size;
-  const totalSizeUnitElement = document.getElementById("total-size-unit");
-  totalSizeUnitElement.innerText = formattedTotalSize.unit;
+const updateDashboard = (usedSizeInBytes) => {
+  updateSizes(usedSizeInBytes, "used-size", "used-size-unit");
+  updateSizes(totalSizeInBytes - usedSizeInBytes, "remain-size", "remain-size-unit");
+  updateSizes(totalSizeInBytes, "max-size", "total-size-unit");
 
   const progressBarClr = document.getElementById("progress-bar-clr");
-  progressBarClr.style.width = (usedSize / totalSizeInBytes) * 100 + "%";
+  progressBarClr.style.width = (usedSizeInBytes / totalSizeInBytes) * 100 + "%";
 
   const progressBarCircle = document.getElementById("progress-bar-circle");
-  if (usedSize > 0) progressBarCircle.style.right = "0";
+  if (usedSizeInBytes > 0) progressBarCircle.style.right = "0";
   else progressBarCircle.style.right = "-10px";
+}
+
+const updateSizes = (sizeInBytes, sizeElementId, unitsElementId) => {
+  const formattedSize = getFormattedBytes(sizeInBytes)
+  const usedSizeElement = document.getElementById(sizeElementId);
+  usedSizeElement.innerText = formattedSize.size;
+  const usedSizeUnitElement = document.getElementById(unitsElementId);
+  usedSizeUnitElement.innerText = formattedSize.unit;
 }
 
 const getFormattedBytes = (bytes) => {
@@ -77,9 +71,9 @@ const getFormattedBytes = (bytes) => {
 }
 
 const reset = () => {
-  usedSize = 0;
-  updateDashboard(usedSize);
-  window.localStorage.setItem("usedSize", 0);
+  usedSizeInBytes = 0;
+  updateDashboard(usedSizeInBytes);
+  window.localStorage.setItem("usedSizeInBytes", 0);
 }
 
 initApp();
