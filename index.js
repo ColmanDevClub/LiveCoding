@@ -10,9 +10,9 @@ updateSizes();
 
 const onFileInputChange = (event) => {
   const fileName = event.value;
-  const isFileValid = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(fileName);
+  const isImgFile = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(fileName);
 
-  if (isFileValid) {
+  if (isImgFile) {
     const file = event.files[0];
     const fileSize = parseInt(file.size / 1024 / 1024);
     if (usedSize + fileSize > totalSize) {
