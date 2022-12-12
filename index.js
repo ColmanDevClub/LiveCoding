@@ -15,13 +15,13 @@ const onFileInputChange = (event) => {
   if (isImgFile) {
     const file = event.files[0];
     const fileSize = parseInt(file.size / 1024 / 1024);
-    if (usedSize + fileSize > totalSize) {
-      alert("Not enough size!");
-    } else {
+    if (usedSize + fileSize <= totalSize) {
       usedSize = usedSize + fileSize;
       window.localStorage.setItem("usedSize", usedSize);
 
       updateSizes();
+    } else {
+      alert("Not enough size!");
     } 
   } else {
     alert("Invalid file type!");
